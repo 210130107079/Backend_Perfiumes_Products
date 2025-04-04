@@ -43,6 +43,10 @@ app.use('/api/product', productRoutes);
 app.use('/api/brand',brandRouter)
 app.use('/api/category',categoryRouter)
 
+app.use('/*',(req,res)=>{
+    res.send("Welcome to the API");
+})
+
 
 // Start server
 app.listen(port, () => {
