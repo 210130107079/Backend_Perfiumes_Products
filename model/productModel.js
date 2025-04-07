@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import mongoosePaginate from "mongoose-paginate-v2";
 
 const productSchema = new mongoose.Schema({
     images:{
@@ -21,10 +22,12 @@ const productSchema = new mongoose.Schema({
         type:Number,
         required:true,
     },
-    isActive:{
+    status:{
         type:Boolean,
         default:true,
     }
 },{timestamps:true})
+
+productSchema.plugin(mongoosePaginate)
 
 export const Product = mongoose.model("Product", productSchema)

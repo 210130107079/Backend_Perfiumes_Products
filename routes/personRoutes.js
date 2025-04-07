@@ -17,7 +17,7 @@ router.post('/login', (req,res)=> {
         }
         const user = users[username];
         if (!user || user.password !== password) {
-            return res.status(401).json({ message: "Invalid Username or Password!" });
+            return res.status(401).json({ message: "Invalid Username or Password!" })
         }
 
         const token = jwt.sign({ username, role: user.role }, process.env.JWT_SECRET, { expiresIn: "1h" });
@@ -36,7 +36,7 @@ router.post('/login', (req,res)=> {
 router.post('/logout',(req,res)=>{
     try
     {
-        if(!res.cookie.token){
+        if(!req.cookies.token){
             return res.status(400).json({message:"User Already Logged Out !"})
         }else{
             res.clearCookie('token')

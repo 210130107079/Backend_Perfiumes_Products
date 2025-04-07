@@ -1,21 +1,21 @@
-import express from 'express';
-import dotenv from 'dotenv';
-import connectToDB from './config/db.js';
-import personRoutes from './routes/personRoutes.js';
-import productRoutes from './routes/productRoutes.js';
-import brandRouter from './routes/brandRoutes.js';
-import categoryRouter from './routes/categoryRoutes.js';
-import cookieParser from 'cookie-parser';
+import express from 'express'
+import dotenv from 'dotenv'
+import connectToDB from './config/db.js'
+import personRoutes from './routes/personRoutes.js'
+import productRoutes from './routes/productRoutes.js'
+import brandRouter from './routes/brandRoutes.js'
+import categoryRouter from './routes/categoryRoutes.js'
+import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import path from 'path';
-import { fileURLToPath } from 'url';
+import { fileURLToPath } from 'url'
 
 // Load environment variables
 dotenv.config()
 
-// Initialize Express
-const app = express();
-const port = process.env.PORT || 8080;
+//Initialize Express
+const app = express()
+const port = process.env.PORT || 8080
 
 // Get __dirname in ES Module
 const __filename = fileURLToPath(import.meta.url);
@@ -41,11 +41,7 @@ app.use('/uploads', express.static(uploadsPath));
 app.use('/api/users', personRoutes);
 app.use('/api/product', productRoutes);
 app.use('/api/brand',brandRouter)
-app.use('/api/category',categoryRouter)
-
-app.use('/*',(req,res)=>{
-    res.send("Welcome to the API");
-})
+app.use('/api/category',categoryRouter) 
 
 
 // Start server

@@ -35,13 +35,35 @@ export const addProduct = async (req,res) => {
 export const getAllProducts = async (req,res) => {
     try
     {
+        const {sortBy,search} = req.query
+        const page = req.query.page
+        let filterOption = {}
+        let sortOption = {}
+
+        if(sortBy){
+            if(sortBy === 'ascending'){
+                sortOption.price = 1
+            }else if(sortBy === 'descending'){
+                sortOption.price = -1
+            }
+        }
+        if(search){
+            filterOption.$or=[
+                { productName: { $regex: search, $options: 'i' } },
+                { brand: { $regex: search, $options: 'i' } },
+                { category: { $regex: search, $options: 'i' } }
+            ]
+        }
+
+        if(!req.user){
+            return res.status(403).json({ message: 'You are not authorized to view products !' })
+        }
         if(req.user === 'admin'){
-            const productsAdmin = await Product.find()
-            console.log(productsAdmin)
+            const productsAdmin = await Product.paginate(filterOption,{limit:2,page:page,sort:sortOption})
             res.json(productsAdmin)
         }
         else{
-            const productsManager = await Product.find({isActive:true})
+            const productsManager = await Product.paginate({status:true}).sort(sortOption)
             res.json(productsManager)
         }
     }
@@ -150,9 +172,9 @@ export const setProductStatus = async (req,res) => {
         if(!product){
             return res.status(404).json({ message: 'Product not found!' })
         }
-        product.isActive =!product.isActive
+        product.status =!product.status
         await product.save()
-        res.json({ product, message: `Product status changed to ${product.isActive}!` })
+        res.json({ product, message: `Product status changed to ${product.status}!` })
     }
     catch(error)
     {
