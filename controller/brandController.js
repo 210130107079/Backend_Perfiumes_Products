@@ -43,7 +43,7 @@ export const deleteBrand = async (req,res) => {
             return res.status(404).json({success:true, message: 'Brand not found!' })
         }
 
-        const brandInUse = await Product.exists({brand:brand.brandName})
+        const brandInUse = await Product.exists({brand:brand._id})
         if(brandInUse){
             return res.status(400).json({ message: 'Cannot delete this Brand associated with Products !' });
         }

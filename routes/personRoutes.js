@@ -2,14 +2,14 @@ import express from 'express'
 import jwt from 'jsonwebtoken'
 
 const users = {
-    admin: { username: "admin", password: "admin9898", role: "admin" },
-    manager: { username: "manager", password: "manager9898", role: "manager" }
+    admin: { username: "admin", password: "adminnn", role: "admin" },
+    manager: { username: "manager", password: "manager", role: "manager" }
 };
 
 const router = express.Router()
 
 router.post('/login', (req,res)=> {    
-    const { username, password } = req.body;
+    const { username, password } = req.body
     try 
     {
         if (!username || !password) {
@@ -20,7 +20,7 @@ router.post('/login', (req,res)=> {
             return res.status(401).json({success:true,message: "Invalid Username or Password!" })
         }
 
-        const token = jwt.sign({ username, role: user.role }, process.env.JWT_SECRET, { expiresIn: "1h" });
+        const token = jwt.sign({ username, role: user.role }, process.env.JWT_SECRET, { expiresIn: "1h" })
         
         res.cookie('token', token, { httpOnly: true, secure: true });
 
