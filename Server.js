@@ -24,6 +24,7 @@ const __dirname = path.dirname(__filename);
 console.log(`Current directory: ${__dirname}`);
 // Middleware
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser());
 app.use(cors(
     {
@@ -41,11 +42,11 @@ app.use('/uploads', express.static(uploadsPath));
 app.use('/api/users', personRoutes);
 app.use('/api/product', productRoutes);
 app.use('/api/brand',brandRouter)
-app.use('/api/category',categoryRouter) 
+app.use('/api/category',categoryRouter)
 
 
 // Start server
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
-    connectToDB();
-});
+    connectToDB()
+})

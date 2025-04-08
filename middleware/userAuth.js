@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 const userAuth = async (req,res,next) => {
     const token = req.cookies.token || req.headers.authorization?.split(' ')[1]
     if(!token){
-        return res.status(401).json({message:"Admin is not Authorized !"})
+        return res.status(401).json({success:true,message:"Admin is not Authorized !"})
     }
     try
     {
@@ -13,7 +13,7 @@ const userAuth = async (req,res,next) => {
     }
     catch(error)
     {
-        res.status(401).json({message:"Invalid admin Token Provided !"})
+        res.status(401).json({success:false,error:error.message,message:"Invalid admin Token Provided !"})
         console.log("Error in adminAuth Middleware !",error)
     }
 }

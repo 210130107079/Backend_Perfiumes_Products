@@ -13,6 +13,6 @@ const managerAuth = async (req,res,next) =>{
     }
     catch(error){
         console.log("Error in managerAuth Middleware !");
-        return res.status(403).json({message:"Invalid Manager Token !"})
+        return res.status(403).json({success:false,error:error.message,message:"Invalid Manager Token !"})
     }
 }
